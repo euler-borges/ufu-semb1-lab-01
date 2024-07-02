@@ -26,6 +26,8 @@ Nesta aula iremos instalar
 
 [7] [Git](https://git-scm.com/)
 
+[8] [Chave SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
 ## 4 - Instalação do compilador e da ferramenta de controle de versões
 
 Agora, iremos instalar algumas ferramentas básicas que utilizaremos ao longo do
@@ -56,6 +58,16 @@ e-mail:
 foo@bar$ git config --global user.name "seu nome aqui"
 foo@bar$ git config --global user.email "seu e-mail aqui"
 ```
+
+Além disso, precisamos de uma chave ssh, para realizar a conexão. Assim, deve-se executar os seguintes comandos:
+```console
+foo@bar$ ssh-keygen -t ed25519 -C "email"
+foo@bar$ eval "$(ssh-agent -s)"
+foo@bar$ ssh-add ~/.ssh/id_ed25519
+foo@bar$ cat /home/user/.ssh/id_ed25519.pub
+```
+
+Por fim, com a chave gerada, siga os passos descritos em [8] para adicionar a chave SSH a seu github.
 
 Os arquivos necessários para realização das atividades de laboratório serão
 dsponibilizados por meio de repositórios **git**. Um repositório, ou repo, é 
@@ -126,10 +138,8 @@ Por fim, precisamos instalar as dependências necessárias para a utilização d
 
 ```console
 foo@bar$ sudo apt install libncurses-dev libtinfo-dev
-foo@bar$ sudo ln -s /usr/lib/x86_64-linux-gnu/libncurses.so.6 \
-> /usr/lib/x86_64-linux-gnu/libncurses.so.5
-foo@bar$ sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 \
-> /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+foo@bar$ sudo ln -s /usr/lib/x86_64-linux-gnu/libncurses.so.6 /usr/lib/x86_64-linux-gnu/libncurses.so.5
+foo@bar$ sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6  /usr/lib/x86_64-linux-gnu/libtinfo.so.5
 ```
 
 Podemos testar se o *toolchain* foi instalada correntamente por meio dos comandos:
