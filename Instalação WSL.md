@@ -48,10 +48,10 @@ PS > wsl --list --online
 
 Em seguida, instale a distribuição desejada usando **wsl --install -d <Distro>**.
 Neste curso será utilizada a distribuição **Ubuntu 20.04 LTS**. Caso opte por
-uma distribuição diferente será necessário adaptar as instruções fornecidas.
+uma distribuição diferente será necessário adaptar as instruções fornecidas.(A versão instalada por mim foi a 22.04.3, mais recente e instalada sem especificação)
 
 ```console
-PS > wsl --install -d Ubuntu-20.04
+PS > wsl --install
 ```
 Quando a instalação terminar será solicitado que você escolha um nome de
 usuário e uma senha para este usuário. ATENÇÃO, **não será mostrado **
@@ -161,7 +161,7 @@ Caso sua vesão do kernel seja inferior à requerida abra o *PowerShell* como
 administrador e execute o comando **wsl --update**.
 
 Para compartilhar dispositivos USB a partir do Windows precisamos instalar o
-servidor do  USB/IP, o **USBIP-WIN**, disponível em [2]. Faça o download e 
+servidor do  USB/IP, o **USBIP-WIN**, disponível em [3]. Faça o download e 
 execute o arquivo ***usbipd-win_x.msi***. Ao final do processo de instalação teremos
 
 * um serviço chamado *usbipd* (USBIP Device Host);
@@ -183,9 +183,9 @@ versões do cliente USB/IP de forma transparente.
 ```console
 foo@bar$ apt list -a linux-tools-generic
 Listing... Done
-linux-tools-generic/focal-updates,focal-security,now 5.4.0.113.117 amd64 [installed]
-linux-tools-generic/focal 5.4.0.26.32 amd64
-foo@bar$ sudo update-alternatives --install /usr/local/bin/usbip usbip /usr/lib/linux-tools/5.4.0-113-generic/usbip 20
+linux-tools-generic/jammy-updates,jammy-security,now 5.15.0.113.113 amd64 [installed]
+linux-tools-generic/jammy 5.15.0.25.27 amd64
+foo@bar$ sudo update-alternatives --install /usr/local/bin/usbip usbip /usr/lib/linux-tools/5.15.0-112-generic/usbip 20
 ```
 
 **ATENÇÃO**: **O comando acima funciona adequadamente para o pacote**
@@ -220,7 +220,7 @@ pode ser feito através do *Gerenciador de Dispositivos*.
 Abra o *Windows PowerShell* como administrador e liste os dispositivos USB conectados.
 
 ```console
-PS >  usbipd wsl list
+PS >  usbipd list
 ```
 
 ![Windows PowerShell](images/usbipd-list.jpg "Windows PowerShell")
@@ -233,8 +233,9 @@ De posse do **BUSID** podemos conectar o gravador ST-LINK ao WSL. Para isso
 utilizamos o seguinte comando
 
 ```console
-PS >  usbipd wsl attach --busid 3-3
-PS >  usbipd wsl list
+PS >  usbipd bind --busid 1-5
+PS >  usbipd wsl attach --busid 1-5
+PS >  usbipd list   
 ```
 
 Observe que ao listarmos novamente os dispositivos USB vemos que o estado do
@@ -320,8 +321,8 @@ Para verificar se as permissões serão configuradas corretamente desconecte o
 ST-LINK do WSL. Vá até o terminal do *PowerShell* e digite
 
 ```console
-PS >  usbipd wsl detach --busid 3-3
-PS >  usbipd wsl list
+PS >  usbipd detach --busid 1-5
+PS >  usbipd list
 ```
 
 ![Windows PowerShell](images/usbipd-detach.jpg "Windows PowerShell")
@@ -329,7 +330,7 @@ PS >  usbipd wsl list
 Conecte novamente o ST-LINK ao WSL 
 
 ```console
-PS >  usbipd wsl attach --busid 3-3
+PS >  usbipd attach --wsl --busid 1-5
 ```
 
 vá até o terminal do Ubuntu e verifique os direitos de acesso ao dispostivo.
@@ -355,6 +356,10 @@ foo@bar$ ls -l /dev/bus/usb/001/004
 ```
 
 Caso o sistema tenha sido configurado corretamente você deverá obter uma
-resposta como a da figura abaixo
+resposta como a da figura abaixo(precisei instalar a seguinte extensão)
+
+```console
+foo@bar$ sudo apt install stlink-tools
+```
 
 ![Ubuntu terminal](images/ubuntu-st-info-probe.jpg "Ubuntu terminal")

@@ -1,4 +1,4 @@
-# Laboratório 01 - Instalação das ferramentas de desenvolvimento - Ubuntu 20.04
+# Laboratório 01 - Instalação das ferramentas de desenvolvimento - Ubuntu 22.04
 
 ## 1 - Objetivos
 
@@ -106,8 +106,7 @@ Em seguida navegue até o diretório Downloads e baixe o **toolchain**
 ```console
 foo@bar$ cd
 foo@bar$ cd Downloads
-foo@bar$ wget \
-https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+foo@bar$ wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
 ```
 
 Após o término do download descompacte o arquivo no diretório ***/usr/share***.
@@ -120,8 +119,7 @@ Para facilitar a utilização vamos criar links simbólicos dos programas fornec
 **toolchain** no diretório ***/usr/bin/***
 
 ```console
-foo@bar$ sudo ln -s /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/* \
-> /usr/bin/
+foo@bar$ sudo ln -s /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/* /usr/bin/
 ```
 
 Por fim, precisamos instalar as dependências necessárias para a utilização do **toolchain**
